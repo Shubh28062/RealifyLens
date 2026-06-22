@@ -16,8 +16,9 @@ const Analysis = () => {
   }
 
   const { saved_filename, ela_filename, ai_result, metadata, created_at } = analysisData;
-  const originalImageUrl = `http://localhost:5000/api/analysis/image/${saved_filename}`;
-  const elaImageUrl = ela_filename ? `http://localhost:5000/api/analysis/ela/${ela_filename}` : null;
+  const API_BASE = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+  const originalImageUrl = `${API_BASE}/api/analysis/image/${saved_filename}`;
+  const elaImageUrl = ela_filename ? `${API_BASE}/api/analysis/ela/${ela_filename}` : null;
   
   const isError = ai_result?.label === 'error';
   const isAI = ai_result?.label === 'artificial';
@@ -42,7 +43,7 @@ const Analysis = () => {
       const formData = new FormData();
       formData.append('file', blob, 'image.jpg');
 
-      const uploadResponse = await fetch('http://localhost:5000/api/ocr/extract-text', {
+      const uploadResponse = await fetch(`${API_BASE}/api/ocr/extract-text`, {
         method: 'POST',
         body: formData,
       });

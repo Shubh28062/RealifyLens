@@ -8,8 +8,9 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Initialize axios defaults dynamically so it works if accessed from a phone browser
-  axios.defaults.baseURL = `http://${window.location.hostname}:5000/api`;
+  // Use the cloud backend URL if deployed, otherwise fallback to localhost for development
+  const API_URL = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+  axios.defaults.baseURL = `${API_URL}/api`;
 
   useEffect(() => {
     // Check if user is logged in on mount

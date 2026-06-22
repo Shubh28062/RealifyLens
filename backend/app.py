@@ -15,7 +15,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Configuration
-app.config["MONGO_URI"] = "mongodb://localhost:27017/realifylens"
+app.config["MONGO_URI"] = os.environ.get("MONGO_URI", "mongodb://localhost:27017/realifylens")
 app.config["JWT_SECRET_KEY"] = "super-secret-key-change-in-production"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=7)
 app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(__file__), 'uploads')
@@ -53,4 +53,5 @@ def health_check():
     return jsonify({"status": "success", "message": "RealifyLens API is running!"}), 200
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True, port=5000)
+    port = int(os.environ.get("PORT", 7860))
+    app.run(host='0.0.0.0', debug=False, port=port)

@@ -9,6 +9,7 @@ const History = () => {
   const [error, setError] = useState(null);
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, id: null });
   const navigate = useNavigate();
+  const API_BASE = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
 
   useEffect(() => {
     fetchHistory();
@@ -126,7 +127,7 @@ const History = () => {
               >
                 <div className="w-full aspect-square bg-sidebar rounded-2xl flex items-center justify-center relative mb-4 overflow-hidden">
                   <img 
-                    src={`http://localhost:5000/api/analysis/image/${item.saved_filename}`} 
+                    src={`${API_BASE}/api/analysis/image/${item.saved_filename}`} 
                     alt={item.original_filename} 
                     className="w-full h-full object-cover"
                   />
