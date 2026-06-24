@@ -15,53 +15,53 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="w-64 h-screen bg-sidebar border-r border-border p-6 flex flex-col justify-between">
-      <div>
-        <div className="flex items-center gap-2 mb-10 text-accent font-semibold text-xl tracking-wide">
+    <div className="md:w-64 w-full md:h-[100dvh] bg-sidebar border-t md:border-t-0 md:border-r border-border p-2 md:p-6 flex flex-row md:flex-col justify-between items-center md:items-stretch fixed bottom-0 md:relative z-50">
+      <div className="w-full md:w-auto">
+        <div className="hidden md:flex items-center gap-2 mb-10 text-accent font-semibold text-xl tracking-wide">
           <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
             <ShieldCheck size={20} className="text-accent" />
           </div>
           RealifyLens
         </div>
 
-        <nav className="flex flex-col gap-2">
+        <nav className="flex flex-row md:flex-col justify-around md:justify-start gap-1 md:gap-2 w-full">
           <NavLink 
             to="/" 
             className={({ isActive }) => 
-              `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                isActive && window.location.pathname === '/' ? 'bg-accent text-white shadow-sm' : 'text-secondaryText hover:bg-black/5 hover:text-primaryText'
+              `flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded-xl transition-all flex-1 md:flex-none ${
+                isActive && window.location.pathname === '/' ? 'text-accent md:bg-accent md:text-white md:shadow-sm' : 'text-secondaryText hover:bg-black/5 hover:text-primaryText'
               }`
             }
           >
-            <Home size={18} />
-            <span className="font-medium">Dashboard</span>
+            <Home size={20} className="md:w-[18px] md:h-[18px]" />
+            <span className="text-[10px] md:text-base font-medium">Dashboard</span>
           </NavLink>
           <NavLink 
             to="/analysis" 
             className={({ isActive }) => 
-              `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                isActive ? 'bg-accent text-white shadow-sm' : 'text-secondaryText hover:bg-black/5 hover:text-primaryText'
+              `flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded-xl transition-all flex-1 md:flex-none ${
+                isActive ? 'text-accent md:bg-accent md:text-white md:shadow-sm' : 'text-secondaryText hover:bg-black/5 hover:text-primaryText'
               }`
             }
           >
-            <Search size={18} />
-            <span className="font-medium">Analysis</span>
+            <Search size={20} className="md:w-[18px] md:h-[18px]" />
+            <span className="text-[10px] md:text-base font-medium">Analysis</span>
           </NavLink>
           <NavLink 
             to="/history" 
             className={({ isActive }) => 
-              `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                isActive ? 'bg-accent text-white shadow-sm' : 'text-secondaryText hover:bg-black/5 hover:text-primaryText'
+              `flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded-xl transition-all flex-1 md:flex-none ${
+                isActive ? 'text-accent md:bg-accent md:text-white md:shadow-sm' : 'text-secondaryText hover:bg-black/5 hover:text-primaryText'
               }`
             }
           >
-            <Clock size={18} />
-            <span className="font-medium">History</span>
+            <Clock size={20} className="md:w-[18px] md:h-[18px]" />
+            <span className="text-[10px] md:text-base font-medium">History</span>
           </NavLink>
         </nav>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="hidden md:flex flex-col gap-4">
         {/* System Status */}
         <div className="glass-panel p-4 rounded-xl flex items-center gap-3">
           <div className="relative">

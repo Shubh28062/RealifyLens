@@ -1,8 +1,5 @@
 import os
 
-# Force HuggingFace to run 100% locally to prevent internet connection errors
-os.environ["HF_HUB_OFFLINE"] = "1"
-
 from transformers import pipeline
 import torch
 from PIL import Image

@@ -77,16 +77,16 @@ const MainContent = () => {
   };
 
   return (
-    <div className="w-full h-full p-12 flex flex-col items-center">
+    <div className="w-full h-full p-6 md:p-12 flex flex-col items-center">
       
       {/* Header Section */}
-      <div className="max-w-3xl w-full text-center mt-8 mb-12">
+      <div className="max-w-3xl w-full text-center mt-4 md:mt-8 mb-8 md:mb-12">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6">
           <span className="w-2 h-2 rounded-full bg-accent"></span>
           AI-Powered Forensic Analysis
         </div>
-        <h1 className="text-5xl font-bold text-primaryText mb-6 tracking-tight leading-tight">
-          Uncover the truth behind <br/> <span className="text-accent">every pixel</span>
+        <h1 className="text-3xl md:text-5xl font-bold text-primaryText mb-6 tracking-tight leading-tight">
+          Uncover the truth behind <br className="hidden md:block"/> <span className="text-accent">every pixel</span>
         </h1>
         <p className="text-lg text-secondaryText max-w-xl mx-auto">
           Upload any image and let our advanced AI models detect manipulations, AI generations, and deepfakes with military-grade precision.
