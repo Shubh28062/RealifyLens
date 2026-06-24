@@ -165,24 +165,29 @@ const Analysis = () => {
         )}
         
         {extractedText && (
-          <div className="bg-sidebar rounded-2xl p-6 border border-border relative mt-4 shadow-inner">
-             <button 
+          <div className="w-full rounded-2xl overflow-hidden mt-6 shadow-xl border border-black/10 dark:border-white/10">
+            {/* Mac-style Header */}
+            <div className="bg-[#2D2D2D] px-4 py-3 flex items-center justify-between border-b border-black/20">
+              <div className="flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-[#FF5F56] border border-black/10"></div>
+                <div className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-black/10"></div>
+                <div className="w-3 h-3 rounded-full bg-[#27C93F] border border-black/10"></div>
+              </div>
+              <button 
                 onClick={handleCopy}
-                className={`absolute top-4 right-4 px-4 py-2 rounded-lg transition-all shadow-sm border flex items-center gap-2 ${
-                  isCopied ? 'bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400' : 'bg-card hover:bg-black/5 dark:hover:bg-white/5 border-border text-primaryText'
-                }`}
-                title={isCopied ? "Copied!" : "Copy Text"}
+                className="text-gray-400 hover:text-white flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider transition-colors"
+                title="Copy Text"
               >
-                {isCopied ? <Check size={16} /> : <Copy size={16} />} 
-                <span className="text-xs font-semibold uppercase tracking-wider">
-                  {isCopied ? 'Copied' : 'Copy'}
-                </span>
-             </button>
-             <div className="bg-card/60 dark:bg-black/40 p-6 rounded-xl border border-white/50 dark:border-black/50 mt-8 min-h-[100px]">
-               <p className="text-[15px] whitespace-pre-wrap font-mono text-primaryText leading-relaxed">
-                 {extractedText}
-               </p>
-             </div>
+                {isCopied ? <Check size={14} className="text-[#27C93F]" /> : <Copy size={14} />} 
+                {isCopied ? <span className="text-[#27C93F]">Copied</span> : 'Copy'}
+              </button>
+            </div>
+            {/* Terminal Body */}
+            <div className="bg-[#1E1E1E] p-6 max-h-[350px] overflow-y-auto">
+              <p className="text-[13px] md:text-[14px] whitespace-pre-wrap font-mono text-gray-300 leading-relaxed break-words">
+                {extractedText}
+              </p>
+            </div>
           </div>
         )}
       </div>
