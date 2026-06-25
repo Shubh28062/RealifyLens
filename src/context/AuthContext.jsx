@@ -34,9 +34,9 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = async (email, password) => {
+  const verifyOtpAndLogin = async (email, otp) => {
     try {
-      const response = await axios.post('/auth/login', { email, password });
+      const response = await axios.post('/auth/verify-otp', { email, otp });
       const { access_token, user } = response.data;
       
       localStorage.setItem('token', access_token);
@@ -48,20 +48,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       return { 
         success: false, 
-        message: error.response?.data?.message || 'Login failed' 
-      };
-    }
-  };
-
-  const signup = async (name, email, password) => {
-    try {
-      await axios.post('/auth/signup', { name, email, password });
-      // Auto login after signup
-      return await login(email, password);
-    } catch (error) {
-      return { 
-        success: false, 
-        message: error.response?.data?.message || 'Signup failed' 
+        message: error.response?.data?.message || 'Verification failed' 
       };
     }
   };
@@ -74,7 +61,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, loading }}>
+    <AuthContext.Provider value={{ user, verifyOtpAndLogin, logout, loading }}>
       {!loading && children}
     </AuthContext.Provider>
   );
