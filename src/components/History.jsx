@@ -28,7 +28,7 @@ const History = () => {
   };
 
   const handleCardClick = (analysisData) => {
-    navigate('/analysis', { state: { analysisData } });
+    navigate('/dashboard/analysis', { state: { analysisData } });
   };
 
   const handleDeleteClick = (e, id) => {

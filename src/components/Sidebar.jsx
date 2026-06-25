@@ -26,10 +26,11 @@ const Sidebar = () => {
 
         <nav className="flex flex-row md:flex-col justify-around md:justify-start gap-1 md:gap-2 w-full">
           <NavLink 
-            to="/" 
+            to="/dashboard" 
+            end
             className={({ isActive }) => 
               `flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded-xl transition-all flex-1 md:flex-none ${
-                isActive && window.location.pathname === '/' ? 'text-accent md:bg-accent md:text-white md:shadow-sm' : 'text-secondaryText hover:bg-black/5 hover:text-primaryText'
+                isActive && window.location.pathname === '/dashboard' ? 'text-accent md:bg-accent md:text-white md:shadow-sm' : 'text-secondaryText hover:bg-black/5 hover:text-primaryText'
               }`
             }
           >
@@ -37,7 +38,7 @@ const Sidebar = () => {
             <span className="text-[10px] md:text-base font-medium">Dashboard</span>
           </NavLink>
           <NavLink 
-            to="/analysis" 
+            to="/dashboard/analysis" 
             className={({ isActive }) => 
               `flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded-xl transition-all flex-1 md:flex-none ${
                 isActive ? 'text-accent md:bg-accent md:text-white md:shadow-sm' : 'text-secondaryText hover:bg-black/5 hover:text-primaryText'
@@ -48,7 +49,7 @@ const Sidebar = () => {
             <span className="text-[10px] md:text-base font-medium">Analysis</span>
           </NavLink>
           <NavLink 
-            to="/history" 
+            to="/dashboard/history" 
             className={({ isActive }) => 
               `flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded-xl transition-all flex-1 md:flex-none ${
                 isActive ? 'text-accent md:bg-accent md:text-white md:shadow-sm' : 'text-secondaryText hover:bg-black/5 hover:text-primaryText'

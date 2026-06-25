@@ -53,15 +53,20 @@ const DashboardLayout = () => {
   );
 };
 
+import Landing from './components/Landing';
+
+// ... (imports remain at top) ...
+
 function App() {
   return (
     <Routes>
+      <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       
-      <Route element={<DashboardLayout />}>
-        <Route path="/" element={<MainContent />} />
-        <Route path="/analysis" element={<Analysis />} />
-        <Route path="/history" element={<History />} />
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route index element={<MainContent />} />
+        <Route path="analysis" element={<Analysis />} />
+        <Route path="history" element={<History />} />
       </Route>
       
       {/* Fallback route */}

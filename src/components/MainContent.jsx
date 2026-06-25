@@ -67,7 +67,7 @@ const MainContent = () => {
       });
       
       // Navigate to Analysis page with the results
-      navigate('/analysis', { state: { analysisData: response.data.analysis } });
+      navigate('/dashboard/analysis', { state: { analysisData: response.data.analysis } });
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Failed to analyze the image. Please try again.");
