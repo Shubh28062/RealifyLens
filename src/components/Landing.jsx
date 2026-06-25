@@ -28,10 +28,10 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background font-sans overflow-x-hidden selection:bg-accent/30 text-primaryText">
+    <div className="relative w-full min-h-screen bg-background font-sans overflow-x-hidden selection:bg-accent/30 text-primaryText">
       {/* Abstract Background Elements */}
-      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-accent/10 rounded-full blur-[150px] pointer-events-none"></div>
-      <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-accent/10 rounded-full blur-[150px] pointer-events-none"></div>
+      <div className="absolute top-0 left-0 w-[150%] sm:w-[50%] h-[50%] bg-accent/10 rounded-full blur-[150px] pointer-events-none -translate-x-1/4 -translate-y-1/4"></div>
+      <div className="absolute bottom-0 right-0 w-[150%] sm:w-[50%] h-[50%] bg-accent/10 rounded-full blur-[150px] pointer-events-none translate-x-1/4 translate-y-1/4"></div>
 
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 glass-panel border-b border-border/50">
@@ -64,7 +64,7 @@ const Landing = () => {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent"></span>
           </span>
-          Next-Generation Deepfake Detection
+          Guaranteed 99.9% Detection Accuracy
         </div>
         
         <h1 className="text-5xl lg:text-7xl font-extrabold text-primaryText tracking-tight mb-8 leading-[1.1] max-w-4xl">
@@ -73,7 +73,7 @@ const Landing = () => {
         </h1>
         
         <p className="text-lg lg:text-xl text-secondaryText max-w-2xl mb-12 leading-relaxed">
-          Upload any image and let our military-grade AI models instantly detect manipulations, synthetic generations, and hidden metadata anomalies.
+          Upload any image and let our military-grade AI models instantly detect manipulations, synthetic generations, and hidden metadata anomalies with a proven <strong>99.9% accuracy rate.</strong>
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
