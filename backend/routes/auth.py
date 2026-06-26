@@ -66,8 +66,8 @@ def request_otp():
             """
             msg.attach(MIMEText(html, 'html'))
             
-            server = smtplib.SMTP('smtp.gmail.com', 587)
-            server.starttls()
+            # Using SMTP_SSL with port 465 and a 10 second timeout
+            server = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=10)
             server.login(sender_email, app_password)
             server.send_message(msg)
             server.quit()
@@ -75,7 +75,7 @@ def request_otp():
             print(f"[SUCCESS] OTP Email successfully sent to {email}")
         except Exception as e:
             print(f"[ERROR] Failed to send email: {e}")
-            return jsonify({"message": "Failed to send email. Please check server logs."}), 500
+            return jsonify({"message": "Failed to connect to email server. Please try again."}), 500
     else:
         # Fallback if credentials aren't set
         print("=" * 50)
