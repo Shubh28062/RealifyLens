@@ -4,8 +4,9 @@ from extensions import mongo
 import datetime
 import random
 import os
-import urllib.request
-import json
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -38,12 +39,18 @@ def request_otp():
         {"$set": {"login_otp": otp, "login_otp_expiry": otp_expiry}}
     )
 
-    # Send Email via Resend HTTP API
-    resend_api_key = os.environ.get("RESEND_API_KEY", "re_Lq36dhh5_8WjT2QVkdYCdroCyQq6gfUwg")
+    # Send Email via Gmail SMTP
+    sender_email = os.environ.get("GMAIL_USER", "shubhamrauniyar7777@gmail.com")
+    app_password = os.environ.get("GMAIL_APP_PASSWORD", "elnuswivbaqqwhzk")
 
-    if resend_api_key:
+    if sender_email and app_password:
         try:
-            html_content = f"""
+            msg = MIMEMultipart()
+            msg['From'] = f"RealifyLens Security <{sender_email}>"
+            msg['To'] = email
+            msg['Subject'] = "Your RealifyLens Login Code"
+            
+            html = f"""
             <html>
                 <body style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4;">
                     <div style="max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
@@ -57,35 +64,23 @@ def request_otp():
                 </body>
             </html>
             """
+            msg.attach(MIMEText(html, 'html'))
             
-            payload = {
-                "from": "onboarding@resend.dev",
-                "to": email,
-                "subject": "Your RealifyLens Login Code",
-                "html": html_content
-            }
+            # Using SMTP_SSL with port 465 and a 10 second timeout
+            server = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=10)
+            server.login(sender_email, app_password)
+            server.send_message(msg)
+            server.quit()
             
-            req = urllib.request.Request(
-                'https://api.resend.com/emails',
-                data=json.dumps(payload).encode('utf-8'),
-                headers={
-                    'Authorization': f'Bearer {resend_api_key}',
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'Mozilla/5.0'
-                }
-            )
-            
-            with urllib.request.urlopen(req, timeout=10) as response:
-                print(f"[SUCCESS] OTP Email successfully sent to {email}")
-                
+            print(f"[SUCCESS] OTP Email successfully sent to {email}")
         except Exception as e:
-            print(f"[ERROR] Failed to send email via Resend: {e}")
+            print(f"[ERROR] Failed to send email via SMTP: {e}")
             return jsonify({"message": "Failed to connect to email server. Please try again."}), 500
     else:
         # Fallback if credentials aren't set
         print("=" * 50)
         print(f"🔒 LOGIN CODE FOR {email}: {otp}")
-        print("⚠️ WARNING: Email not sent because RESEND_API_KEY environment variable is not set.")
+        print("⚠️ WARNING: Email not sent because GMAIL_USER and GMAIL_APP_PASSWORD environment variables are not set.")
         print("=" * 50, flush=True)
 
     return jsonify({"message": "A 6-digit code has been sent to your email"}), 200
