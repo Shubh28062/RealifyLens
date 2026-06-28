@@ -39,49 +39,40 @@ def request_otp():
         {"$set": {"login_otp": otp, "login_otp_expiry": otp_expiry}}
     )
 
-    # Send Email via Gmail SMTP
-    sender_email = os.environ.get("GMAIL_USER", "shubhamrauniyar7777@gmail.com")
-    app_password = os.environ.get("GMAIL_APP_PASSWORD", "elnuswivbaqqwhzk")
-
-    if sender_email and app_password:
-        try:
-            msg = MIMEMultipart()
-            msg['From'] = f"RealifyLens Security <{sender_email}>"
-            msg['To'] = email
-            msg['Subject'] = "Your RealifyLens Login Code"
+    # Send Email via EmailJS HTTP API
+    try:
+        import urllib.request
+        import json
+        
+        payload = {
+            "service_id": "service_4dgb9if",
+            "template_id": "template_lngjvil",
+            "user_id": "XPSOrt_W3BzNe-yZ-",
+            "template_params": {
+                "to_email": email,
+                "email": email,
+                "reply_to": email,
+                "recipient": email,
+                "otp": otp
+            }
+        }
+        
+        req = urllib.request.Request(
+            'https://api.emailjs.com/api/v1.0/email/send',
+            data=json.dumps(payload).encode('utf-8'),
+            headers={
+                'Content-Type': 'application/json',
+                'User-Agent': 'Mozilla/5.0',
+                'Origin': 'https://realify-lens.vercel.app'
+            }
+        )
+        
+        with urllib.request.urlopen(req, timeout=10) as response:
+            print(f"[SUCCESS] OTP Email successfully sent to {email} via EmailJS")
             
-            html = f"""
-            <html>
-                <body style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4;">
-                    <div style="max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                        <h2 style="color: #333; text-align: center;">Sign In to RealifyLens</h2>
-                        <p style="color: #666; font-size: 16px;">Here is your secure 6-digit login code. Enter this code to access your dashboard:</p>
-                        <div style="background-color: #f8f9fa; border: 2px dashed #ccc; padding: 15px; text-align: center; margin: 25px 0; border-radius: 8px;">
-                            <h1 style="color: #ff9900; letter-spacing: 5px; margin: 0; font-size: 36px;">{otp}</h1>
-                        </div>
-                        <p style="color: #999; font-size: 14px; text-align: center;">This code will expire in 15 minutes.</p>
-                    </div>
-                </body>
-            </html>
-            """
-            msg.attach(MIMEText(html, 'html'))
-            
-            # Using SMTP_SSL with port 465 and a 10 second timeout
-            server = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=10)
-            server.login(sender_email, app_password)
-            server.send_message(msg)
-            server.quit()
-            
-            print(f"[SUCCESS] OTP Email successfully sent to {email}")
-        except Exception as e:
-            print(f"[ERROR] Failed to send email via SMTP: {e}")
-            return jsonify({"message": "Failed to connect to email server. Please try again."}), 500
-    else:
-        # Fallback if credentials aren't set
-        print("=" * 50)
-        print(f"🔒 LOGIN CODE FOR {email}: {otp}")
-        print("⚠️ WARNING: Email not sent because GMAIL_USER and GMAIL_APP_PASSWORD environment variables are not set.")
-        print("=" * 50, flush=True)
+    except Exception as e:
+        print(f"[ERROR] Failed to send email via EmailJS: {e}")
+        return jsonify({"message": "Failed to connect to email server. Please try again."}), 500
 
     return jsonify({"message": "A 6-digit code has been sent to your email"}), 200
 
